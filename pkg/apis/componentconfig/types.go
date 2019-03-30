@@ -48,4 +48,7 @@ type DeschedulerConfiguration struct {
 
 	// EvictLocalStoragePods allows pods using local storage to be evicted.
 	EvictLocalStoragePods bool
+
+	// Prefix of the annotations specific to the descheduler.
+	AnnotationsPrefix string
 }

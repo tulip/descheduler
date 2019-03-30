@@ -21,10 +21,11 @@ limitations under the License.
 package v1alpha1
 
 import (
+	time "time"
+
 	componentconfig "github.com/kubernetes-incubator/descheduler/pkg/apis/componentconfig"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
-	time "time"
 )
 
 func init() {
@@ -48,6 +49,7 @@ func autoConvert_v1alpha1_DeschedulerConfiguration_To_componentconfig_Deschedule
 	out.NodeSelector = in.NodeSelector
 	out.MaxNoOfPodsToEvictPerNode = in.MaxNoOfPodsToEvictPerNode
 	out.EvictLocalStoragePods = in.EvictLocalStoragePods
+	out.AnnotationsPrefix = in.AnnotationsPrefix
 	return nil
 }
 
@@ -64,6 +66,7 @@ func autoConvert_componentconfig_DeschedulerConfiguration_To_v1alpha1_Deschedule
 	out.NodeSelector = in.NodeSelector
 	out.MaxNoOfPodsToEvictPerNode = in.MaxNoOfPodsToEvictPerNode
 	out.EvictLocalStoragePods = in.EvictLocalStoragePods
+	out.AnnotationsPrefix = in.AnnotationsPrefix
 	return nil
 }
 
