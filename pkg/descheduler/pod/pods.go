@@ -17,6 +17,7 @@ limitations under the License.
 package pod
 
 import (
+	"github.com/golang/glog"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -55,6 +56,7 @@ func IsLatencySensitivePod(pod *v1.Pod) bool {
 func IsEvictable(pod *v1.Pod, evictLocalStoragePods bool, annotationsPrefix string) bool {
 	ownerRefList := OwnerRef(pod)
 	if IsMirrorPod(pod) || (!evictLocalStoragePods && IsPodWithLocalStorage(pod)) || len(ownerRefList) == 0 || IsDaemonsetPod(ownerRefList) || IsCriticalPod(annotationsPrefix, pod) {
+		glog.V(1).Infof("Pod: %#v - not evictable", pod.Name)
 		return false
 	}
 	return true
@@ -69,6 +71,7 @@ func ListEvictablePodsOnNode(client clientset.Interface, node *v1.Node, evictLoc
 	evictablePods := make([]*v1.Pod, 0)
 	for _, pod := range pods {
 		if !IsEvictable(pod, evictLocalStoragePods, annotationsPrefix) {
+			glog.V(1).Infof("Pod not evictable: %#v", pod.Name)
 			continue
 		} else {
 			evictablePods = append(evictablePods, pod)
