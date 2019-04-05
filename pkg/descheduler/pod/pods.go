@@ -61,7 +61,7 @@ func IsEvictable(pod *v1.Pod, evictLocalStoragePods bool, annotationsPrefix stri
 }
 
 // ListEvictablePodsOnNode returns the list of evictable pods on node.
-func ListEvictablePodsOnNode(client clientset.Interface, evictLocalStoragePods bool, annotationsPrefix string, node *v1.Node) ([]*v1.Pod, error) {
+func ListEvictablePodsOnNode(client clientset.Interface, node *v1.Node, evictLocalStoragePods bool, annotationsPrefix string) ([]*v1.Pod, error) {
 	pods, err := ListPodsOnANode(client, node)
 	if err != nil {
 		return []*v1.Pod{}, err
